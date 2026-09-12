@@ -1,0 +1,23 @@
+# ~~~~ files ~~~~
+*.swp
+*.aux
+*.log
+
+# ~~ latex ~~
+*.fdb_latexmk
+*.fls
+*.toc
+
+# ~~ draw.io ~~
+*.drawio.bkp
+
+# ~~ vivado ~~
+*.cache*
+*.hw*
+*.ip_user_files*
+*.sim*
+*.src*
+*.sim*
+*.runs*
+
+# ~~~~ directories ~~~~
