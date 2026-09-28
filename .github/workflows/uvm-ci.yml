@@ -24,4 +24,5 @@ jobs:
             -v "$PWD:/workspace" \
             -w /workspace \
             uvm-ci:latest \
-            ./repo_run.sh
+            ./repo_run.sh \
+            .

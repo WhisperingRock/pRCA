@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # ~~~~ libraries (absolute path) ~~~~
-UVM_HOME="/home/whirck/1800.2-2017-1.0/src"
-VERILATOR_HOME="/home/whirck/Tools/Verilator/verilator/bin"
+UVM_HOME="/opt/uvm/src"
+VERILATOR_HOME="/usr/local/bin"
 
 # ~~~~ local dir (relative path) ~~~~
 SRC_DIR="00_rtl/00_src/"
@@ -20,11 +20,11 @@ TESTS=(
 
 coverage_files=()
 
-printf "\n\n| ~~~~~~~~ Verilator venv ~~~~~~~~~ |\n"
+printf "\n\n| ~~~~~~~~ Verilator venv ~~~~~~~~~ |\n\n\n\n\n\n\n\n\n"
 	python3 -m venv .venv
 	source .venv/bin/activate
 
-printf "\n\n| ~~~~~~~~~~~ Testing ~~~~~~~~~~~ |\n"
+printf "\n\n| ~~~~~~~~~~~ Testing ~~~~~~~~~~~ |\n\n\n\n\n\n\n\n\n"
 
 	make compile \
 		UVM_HOME="$UVM_HOME" \
@@ -37,7 +37,7 @@ printf "\n\n| ~~~~~~~~~~~ Testing ~~~~~~~~~~~ |\n"
 		coverage_file="${TEST}.dat"
 		coverage_files+=("$coverage_file")
 
-		printf "| ~~ Running %s ~~ |\n" "$TEST"
+		printf "| ~~ Running %s ~~ |\n\n\n\n\n\n\n\n\n" "$TEST"
 
 		make run \
 			UVM_HOME="$UVM_HOME" \
@@ -55,7 +55,7 @@ printf "\n\n| ~~~~~~~~~~~ Testing ~~~~~~~~~~~ |\n"
 	done
 
 		
-printf "\n\n| ~~~~~~~~~~~ Coverage~~~~~~~~~~~ |\n"
+printf "\n\n| ~~~~~~~~~~~ Coverage~~~~~~~~~~~ |\n\n\n\n\n\n\n\n\n"
 	# merge covreage reports
 	verilator_coverage \
 		--write "$MERGED_COVERAGE" \
@@ -66,19 +66,12 @@ printf "\n\n| ~~~~~~~~~~~ Coverage~~~~~~~~~~~ |\n"
 		--report summary \
 		"$MERGED_COVERAGE"
 
-#printf "\n\n| ~~~~~~~~~~~ linting ~~~~~~~~~~~ |\n"
-#	make lint UVM_HOME=$UVM_HOME \
-#		SEED=42 \
-#		TOP_TB_MODULE=$TOP_TB_MODULE \
-#		SRC_DIR=$SRC_DIR \
-#		TEST_DIR=$TEST_DIR
+printf "\n\n| ~~~~~~~~~~~ linting ~~~~~~~~~~~ |\n\n\n\n\n\n\n\n\n"
+	make lint UVM_HOME=$UVM_HOME \
+		SEED=42 \
+		TOP_TB_MODULE=$TOP_TB_MODULE \
+		SRC_DIR=$SRC_DIR \
+		TEST_DIR=$TEST_DIR
 
-
-if [[ -n "$WAVEFILE" ]]; then
-	printf "\n\n| ~~~~~~~~~~~ waveform ~~~~~~~~~~~ |\n"
-	gtkwave "$WAVEFILE"
-fi
-
-printf "\n\n| ~~~~~~~~~~~ clean up and exit~~~~~~~~~~~ |\n"
+printf "\n\n| ~~~~~~~~~~~ clean up and exit~~~~~~~~~~~ |\n\n\n\n\n\n\n\n\n"
 	make clean
-	#rm $WAVEFILE
