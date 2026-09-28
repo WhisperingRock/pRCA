@@ -1,0 +1,27 @@
+name: UVM CI 
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build UVM Docker image
+        run: |
+          docker build \
+            -t uvm-ci:latest \
+            .
+
+      - name: Run UVM
+        run: |
+          docker run --rm \
+            -v "$PWD:/workspace" \
+            -w /workspace \
+            uvm-ci:latest \
+            ./repo_run.sh

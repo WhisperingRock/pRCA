@@ -50,22 +50,25 @@ typedef struct packed
 
 } pipereg_t;
 
-module FourAdderPipe(
-	input logic  [31:0] A, B,
-	input logic 		Ci,
-	input logic			CLK,
-	input logic			RST,
-	output logic [31:0]	S, 
-	output logic		Co
+module FourAdderPipe
+#(parameter BITWIDTH = 32)
+(
+	input logic	 [BITWIDTH-1:0]	A, B,
+	input logic 				Ci,
+	input logic					CLK,
+	input logic					RST,
+
+	output logic [BITWIDTH-1:0]	S, 
+	output logic				Co
 );
 
 	// ~~~~ locals ~~~~
 	// ~~ consts ~~
-	localparam 		ADDWIDTH = 8;
+	localparam 					ADDWIDTH = 8;
 	
 	// ~~ wires ~~
-	logic [31:0]	sum;
-	logic [3:0]		carry; 
+	logic [31:0]				sum;
+	logic [3:0]					carry; 
 	
 	// ~~ regs ~~
 	pipereg_t pr; 
@@ -153,8 +156,6 @@ module FourAdderPipe(
 		end
 	end
 
-
-	
 	// ~~~~ async logic ~~~~
 	assign S 	= {pr.p3_sum3, pr.p3_sum2, pr.p3_sum1, pr.p3_sum0};
 	assign Co	= pr.p3_carry3;	

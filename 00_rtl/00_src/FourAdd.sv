@@ -20,25 +20,33 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module FourAdd(
-	input logic  [31:0] A, B,
-	input logic 		Ci, 
-	output logic [31:0]	S, 
-	output logic		Co
+module FourAdd
+#(parameter BITWIDTH = 32)
+(
+	input logic  [BITWIDTH-1:0] A, B,
+	input logic 				Ci, 
+	output logic [BITWIDTH-1:0]	S, 
+	output logic				Co
 );
 
 	// ~~~~ locals ~~~~
-	genvar 				i;
+	genvar 						i;
 	// consts
-	localparam 			ADDWIDTH = 8;
+	localparam 	int				ADDWIDTH = 8;
+	localparam	int				W = BITWIDTH / ADDWIDTH;
 	// wires
-	logic	[4:0]		carry; 
+	logic	[W:0]				carry;	// requires an extra bit  
 	
 	
 	// ~~~~ instances ~~~~
 	generate
-		for(i = 0; i < 4; i++) begin
-			RippleCarryAdder #(ADDWIDTH) gen_add
+		for(i = 0; i < W; i=i+1) begin
+
+			RippleCarryAdder 
+			#(
+				.BITWIDTH(ADDWIDTH)
+			) 
+			gen_add
 			(
 				.A				(A[i*ADDWIDTH +:ADDWIDTH]), 
 				.B				(B[i*ADDWIDTH +:ADDWIDTH]), 
@@ -47,13 +55,12 @@ module FourAdd(
 				.S				(S[i*ADDWIDTH +:ADDWIDTH]), 
 				.Co				(carry[i+1])
 			);
+
 		end
 	endgenerate
 	
 	// ~~~~ comb logic ~~~~
 	assign	carry[0] 	= Ci;
 	assign	Co			= carry[4];
-	
-
 	
 endmodule

@@ -1,7 +1,8 @@
-# ~~~~ files ~~~~
+# ~~~~ misc ~~~~
 *.swp
 *.aux
 *.log
+*.dat
 
 # ~~ latex ~~
 *.fdb_latexmk
@@ -21,3 +22,4 @@
 *.runs*
 
 # ~~~~ directories ~~~~
+.venv/*

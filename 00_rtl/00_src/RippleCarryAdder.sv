@@ -30,7 +30,7 @@ module RippleCarryAdder
 );
 	
 	// ~~~~ locals ~~~~
-	logic			[BITWIDTH:0]	carry;
+	logic			[BITWIDTH:0]	carry; // carries an extra bit ;)
 	genvar 							i;
 	
 	// ~~~~ comb ~~~~
@@ -39,15 +39,17 @@ module RippleCarryAdder
 	
 	// ~~~~ instances ~~~~
 	generate
-		for(i = 0; i < BITWIDTH; i++) begin
+		for(i = 0; i < BITWIDTH; i=i+1) begin
+
 			FullAdder fa(
-			.A			(A[i]), 
-			.B			(B[i]), 
-			.Ci			(carry[i]), 
-			// ~~
-			.S			(S[i]), 
-			.Co			(carry[i+1])
+				.A			(A[i]), 
+				.B			(B[i]), 
+				.Ci			(carry[i]), 
+				// ~~
+				.S			(S[i]), 
+				.Co			(carry[i+1])
 		    );
+
 		end
 	endgenerate 
 	
